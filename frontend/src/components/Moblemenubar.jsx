@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Lottie from 'lottie-react';
 import menuAnim from '../images/lottieflow-menu-nav-11-1-000000-easey.json';
-import SearchBar from './searchbar';
+import SearchBar from './Searchbar';
 
 export default function MobileMenuBar() {
     const [isOpen, setIsOpen] = useState(false);
