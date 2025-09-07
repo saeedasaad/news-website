@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 export default function Card({ data }) {
   if (!Array.isArray(data) || data.length === 0) {

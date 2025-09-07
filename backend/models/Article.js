@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const articleSchema = new mongoose.Schema({
-  source: Object,
+  source: {id: String,name: String,},
   author: String,
   title: { type: String, required: true },
   description: String,
@@ -9,7 +9,7 @@ const articleSchema = new mongoose.Schema({
   urlToImage: String,
   publishedAt: Date,
   content: String,
-  fetchedAt: { type: Date, default: Date.now }
+  fetchedAt: { type: Date, default: Date.now },
 });
 
 const Article = mongoose.models.Article || mongoose.model("Article", articleSchema);

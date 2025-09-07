@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import './App.css'
-import Newsapp from './Components/Newsapp'
+import NewsApp from './components/Newsapp'
+
 
 function App() {
 
   return (
     <>
-    <Newsapp />
+    <NewsApp/>
     </>
   )
 }
