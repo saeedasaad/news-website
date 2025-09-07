@@ -48,7 +48,7 @@ export default function MobileMenuBar() {
                         </li>
                     </ul>
 
-                    <SearchBar />
+                    <SearchBar/>
 
                     {/* Social Icons */}
                     <div className="gap-8 justify-start items-center flex gap-6 justify-start items-senter">
