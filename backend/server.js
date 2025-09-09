@@ -3,6 +3,9 @@ dotenv.config();
 
 import express from "express";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+
 import newsRoutes from "./routes/news.js";
 import connectDB from "./config/connectDB.js";
 
@@ -32,11 +35,29 @@ app.get("/", (req, res) => {
 app.use("/api/news", newsRoutes);
 
 app.get("/.well-known/appspecific/com.chrome.devtools.json", (req, res) => {
-  res.status(204).end(); 
+  res.status(204).end();
 });
+
+// ----------------------------
+// ✅ Serve frontend build
+// ----------------------------
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "dist")));
+
+// React Router fallback (for non-API routes)
+app.get("*", (req, res) => {
+  if (req.path.startsWith("/api")) {
+    return res.status(404).json({ error: "API route not found" });
+  }
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
+// ----------------------------
 
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(` Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
