@@ -2,7 +2,6 @@ import axios from "axios";
 import Article from "../models/Article.js";
 
 const NEWS_API = "https://newsapi.org/v2/top-headlines";
-const TTL_MINUTES = 30;
 
 export default async function fetchAndStoreNews() {
   try {

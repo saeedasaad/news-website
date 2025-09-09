@@ -1,14 +1,11 @@
-import { useState } from 'react'
-import './App.css'
-import NewsApp from './components/Newsapp'
+import React from 'react';
+import './App.css';
+import NewsApp from './components/Newsapp';
 
-
-function App() {
-
+export default function App() {
   return (
     <>
-    <NewsApp/>
+      <NewsApp/>
     </>
-  )
+  );
 }
-export default App

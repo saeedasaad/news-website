@@ -8,60 +8,57 @@ import MobileMenuBar from "./Moblemenubar";
 export default function NewsApp() {
   const [search, setSearch] = useState("pakistan");
   const [newsData, setNewsData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+  const apiBaseUrl = import.meta.env.VITE_BACKEND_URL;
+
+  const fetchNews = async (query = "") => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${apiBaseUrl}/api/news`);
+      console.log("API Base URL:", apiBaseUrl);
+
+      if (!res.ok) throw new Error(`Server error: ${res.status}`);
+
+      const contentType = res.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Invalid response format");
+      }
+
+      const data = await res.json();
+
+      const filtered = query
+        ? data.articles?.filter((article) => {
+            const title = article.title?.toLowerCase() || "";
+            const description = article.description?.toLowerCase() || "";
+            return (
+              title.includes(query.toLowerCase()) ||
+              description.includes(query.toLowerCase())
+            );
+          })
+        : data.articles;
+
+      setNewsData(filtered || []);
+    } catch (err) {
+      console.error("Fetch error:", err.message);
+      setError(err.message);
+      setNewsData([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const controller = new AbortController();
-
-    const fetchNews = async () => {
-      try {
-        const res = await fetch(`${apiBaseUrl}/news`, {
-          signal: controller.signal,
-        });
-
-        if (!res.ok) {
-          throw new Error(`Server error: ${res.status}`);
-        }
-
-        const contentType = res.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-          throw new Error("Invalid response format");
-        }
-
-        const data = await res.json();
-        setNewsData(data.articles || []);
-        console.log("Fetched:", data.articles);
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Fetch aborted");
-        } else {
-          console.error("Fetch error:", err.message);
-          setNewsData([]);
-        }
-      }
-    };
-
-    fetchNews();
-
-    return () => controller.abort();
+    fetchNews(); // ✅ Load all articles initially
   }, []);
 
   const handleSearchClick = () => {
-    setNewsData([]); // Optional: clear before re-fetch
-    fetch(`${apiBaseUrl}/news`)
-      .then((res) => {
-        if (!res.ok) throw new Error(`Server error: ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
-        setNewsData(data.articles || []);
-      })
-      .catch((err) => {
-        console.error("Fetch error:", err.message);
-        setNewsData([]);
-      });
+    fetchNews(search);
   };
+
+
 
   return (
     <>
@@ -112,7 +109,7 @@ export default function NewsApp() {
             className="px-5 py-2 text-base sm:text-lg text-[#303134] font-semibold border border-[#ddd] rounded-md bg-white shadow-sm hover:text-[#fd5168] hover:border-[#fd5168] hover:shadow-md transition-all transform hover:-translate-y-1"
             onClick={() => {
               setSearch(category);
-              handleSearchClick();
+              fetchNews(category);
             }}
           >
             {category}
@@ -124,7 +121,13 @@ export default function NewsApp() {
 
       {/* News Cards */}
       <div className="pb-20">
-        <Card data={newsData} />
+        {loading ? (
+          <p className="text-center text-gray-600 mt-8">Loading news...</p>
+        ) : error ? (
+          <p className="text-center text-red-500 mt-8">Error: {error}</p>
+        ) : (
+          <Card data={newsData} />
+        )}
       </div>
 
       <ScrollTopButton />

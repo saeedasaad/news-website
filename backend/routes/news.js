@@ -1,6 +1,6 @@
 import express from "express";
 import Article from "../models/Article.js";
-import fetchAndStoreNews from "../utils/fetchAndStoreNews.js"; 
+import fetchAndStoreNews from "../utils/fetchAndStoreNews.js";
 
 const router = express.Router();
 const TTL_MINUTES = 30;

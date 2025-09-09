@@ -1,12 +1,12 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 import newsRoutes from "./routes/news.js";
 import connectDB from "./config/connectDB.js";
 
-// Create Express app
+dotenv.config();
 const app = express();
 app.use(express.json());
 
@@ -25,18 +25,16 @@ app.use(cors({
   credentials: true,
 }));
 
-// API Routes
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
+// Routes
 app.use("/api", newsRoutes);
 
-app.get("/.well-known/appspecific/com.chrome.devtools.json", (req, res) => {
-  res.status(204).end(); 
-});
+// Static file serving
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+// app.use(express.static(path.join(__dirname, "public")));
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(` Server running on http://localhost:${PORT}`);
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "index.html"));
+// });
+
+export default app;
