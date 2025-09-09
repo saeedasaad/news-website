@@ -51,7 +51,7 @@ export default function NewsApp() {
   };
 
   useEffect(() => {
-    fetchNews(); // ✅ Load all articles initially
+    fetchNews(); 
   }, []);
 
   const handleSearchClick = () => {
