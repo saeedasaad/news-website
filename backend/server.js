@@ -3,15 +3,8 @@ dotenv.config();
 
 import express from "express";
 import cors from "cors";
-import path from "path";
-import { fileURLToPath } from "url";
-
 import newsRoutes from "./routes/news.js";
 import connectDB from "./config/connectDB.js";
-
-// ES module helpers
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Create Express app
 const app = express();
@@ -22,33 +15,24 @@ connectDB();
 
 // CORS setup
 const allowedOrigins = [process.env.FRONTEND_URL, "http://localhost:3000"];
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-      return callback(new Error("CORS policy does not allow this origin."), false);
-    },
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("CORS policy does not allow this origin."), false);
+  },
+  credentials: true,
+}));
 
 // API Routes
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
 app.use("/api/news", newsRoutes);
 
-// ---- Serve Frontend (Vite build) ----
-const frontendPath = path.join(__dirname, "dist");
-app.use(express.static(frontendPath));
-
-// Fallback: always send index.html for React Router / SPA
-app.get("*", (req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"));
-});
-
-// Chrome devtools json
 app.get("/.well-known/appspecific/com.chrome.devtools.json", (req, res) => {
-  res.status(204).end();
+  res.status(204).end(); 
 });
 
 // Start server
