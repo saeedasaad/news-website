@@ -29,7 +29,7 @@ app.use(cors({
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
-app.use("/api", newsRoutes);
+app.use("/api/news", newsRoutes);
 
 app.get("/.well-known/appspecific/com.chrome.devtools.json", (req, res) => {
   res.status(204).end(); 
