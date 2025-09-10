@@ -71,22 +71,21 @@ npm run dev
 
 ## Screenshots
 
-<h3> Home Page</h3>
-<img src="screenshots/homepage.png" alt="Home Page" width="700" />
 
-<h3> Search Results</h3>
-<img src="screenshots/search.png" alt="Search Results" width="700" />
-
-<h3> Mobile View</h3>
-<img src="screenshots/mobile.png" alt="Mobile View" width="200" hight="400" />
+### Screenshots
+<div style="display: flex; gap:30px; align-items: center;">
+  <img src="screenshots/homepage.png" alt="Home Page" height="250" />
+  <img src="screenshots/search.png" alt="Search Results" height="250" />
+  <img src="screenshots/mobile.png" alt="Mobile View" height="250" width="100" />
+</div>
 
 
 ## Environment Variables
 
-Key	Description
-```bash
-VITE_NEWS_API_KEY=a5a031962299402299d659e0493f56a1
-````
+| Key                       |          Description              |
+| ----------------          |          ------------------------ |
+| `VITE_NEWS_API_KEY`       |  a5a031962299402299d659e0493f56a1 |
+
 
 ## Future Improvements
 - Add pagination or infinite scroll
@@ -94,12 +93,12 @@ VITE_NEWS_API_KEY=a5a031962299402299d659e0493f56a1
 - Add localization support
 - Add loading spinner or skeletons
 
-## Acknowledgements
-NewsAPI.org
+## Acknowledgements  
 
-- Vite
-- Tailwind CSS
-- Font Awesome
+- [`NewsAPI.org`](https://newsapi.org/)  
+- [`Vite`](https://vitejs.dev/)  
+- [`Tailwind CSS`](https://tailwindcss.com/)  
+- [`Font Awesome`](https://fontawesome.com/)  
 
 🔗 **[Live Demo](https://news-website-frontend-ochre.vercel.app/)**
 
