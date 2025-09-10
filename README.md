@@ -101,6 +101,6 @@ NewsAPI.org
 - Tailwind CSS
 - Font Awesome
 
-🔗 **[Live Demo](https://saeedasaad.github.io/news-website-API/)**
+🔗 **[Live Demo](https://news-website-frontend-ochre.vercel.app/)**
 
 ---
