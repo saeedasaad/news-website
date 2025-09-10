@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 connectDB();
 
-// CORS
+// CORS setup
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 // API routes
 app.use("/api/news", newsRoutes);
 
-// React SPA fallback
+// SPA fallback — must come AFTER api routes
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
