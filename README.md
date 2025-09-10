@@ -84,24 +84,22 @@ npm run dev
 ## Environment Variables
 
 Key	Description
-VITE_NEWS_API_KEY	a5a031962299402299d659e0493f56a1
+```bash
+VITE_NEWS_API_KEY=a5a031962299402299d659e0493f56a1
+````
 
 ## Future Improvements
--Add pagination or infinite scroll
--Integrate a dark/light mode toggle
--Add localization support
--Add loading spinner or skeletons
-
-##License
-
-This project is licensed under the MIT License.
+- Add pagination or infinite scroll
+- Integrate a dark/light mode toggle
+- Add localization support
+- Add loading spinner or skeletons
 
 ## Acknowledgements
 NewsAPI.org
 
--Vite
--Tailwind CSS
--Font Awesome
+- Vite
+- Tailwind CSS
+- Font Awesome
 
 🔗 **[Live Demo](https://saeedasaad.github.io/news-website-API/)**
 
