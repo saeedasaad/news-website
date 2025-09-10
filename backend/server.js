@@ -14,11 +14,11 @@ app.use(express.json());
 // Connect to DB
 connectDB();
 
-// CORS setup (allow frontend domain on Vercel + local dev)
+// CORS setup
 const allowedOrigins = [
-  "http://localhost:5173",      // Vite dev
-  "http://localhost:3000",      // CRA dev
-  process.env.FRONTEND_URL      // your frontend Vercel URL, e.g. https://frontend.vercel.app
+  "http://localhost:5173",                    
+  "http://localhost:3000",                     
+  "https://news-website-frontend-ochre.vercel.app", 
 ];
 
 app.use(
@@ -27,21 +27,24 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
-      return callback(new Error("CORS policy does not allow this origin."), false);
+      return callback(
+        new Error("CORS policy does not allow this origin."),
+        false
+      );
     },
     credentials: true,
   })
 );
 
-// API routes only
+// API routes
 app.use("/api/news", newsRoutes);
 
-// Default route for health check
+// Health check route
 app.get("/", (req, res) => {
-  res.json({ message: "Backend API is running 🚀" });
+  res.json({ message: "Backend API is running " });
 });
 
-// Start server (for local dev, Vercel ignores listen)
+// Local dev server (Vercel ignores this)
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Backend running on http://localhost:${PORT}`);

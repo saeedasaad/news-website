@@ -5,7 +5,8 @@ import fetchAndStoreNews from "../utils/fetchAndStoreNews.js";
 const router = express.Router();
 const TTL_MINUTES = 30;
 
-router.get("/news", async (req, res) => {
+// Just "/" here, since base is /api/news
+router.get("/", async (req, res) => {
   try {
     res.setHeader("Content-Type", "application/json");
 
@@ -21,7 +22,7 @@ router.get("/news", async (req, res) => {
     const stored = await Article.find().sort({ publishedAt: -1 }).limit(50).lean();
     return res.status(200).json({ source: "api", articles: stored });
   } catch (err) {
-    console.error("GET /news error:", err.message);
+    console.error("GET /api/news error:", err.message);
     const fallback = await Article.find().sort({ publishedAt: -1 }).limit(50).lean();
     return res.status(500).json({ error: "Failed to fetch news", articles: fallback });
   }
