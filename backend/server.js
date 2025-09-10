@@ -14,17 +14,14 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 app.use(express.json());
-
-// connect to DB
 connectDB();
 
-// CORS setup
+// CORS
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
-  process.env.FRONTEND_URL
+  process.env.FRONTEND_URL,
 ];
-
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -37,13 +34,13 @@ app.use(
   })
 );
 
+// Serve static frontend
+app.use(express.static(path.join(__dirname, "dist")));
+
 // API routes
 app.use("/api/news", newsRoutes);
 
-// Serve frontend
-app.use(express.static(path.join(__dirname, "dist")));
-
-// React fallback for any non-API route
+// React SPA fallback
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
