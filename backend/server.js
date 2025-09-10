@@ -1,27 +1,26 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import path from "path";
-import { fileURLToPath } from "url";
 import express from "express";
 import cors from "cors";
 import newsRoutes from "./routes/news.js";
 import connectDB from "./config/connectDB.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const app = express();
 
+// Middleware
 app.use(express.json());
+
+// Connect to DB
 connectDB();
 
-// CORS setup
+// CORS setup (allow frontend domain on Vercel + local dev)
 const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:3000",
-  process.env.FRONTEND_URL,
+  "http://localhost:5173",      // Vite dev
+  "http://localhost:3000",      // CRA dev
+  process.env.FRONTEND_URL      // your frontend Vercel URL, e.g. https://frontend.vercel.app
 ];
+
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -34,18 +33,16 @@ app.use(
   })
 );
 
-// Serve static frontend
-app.use(express.static(path.join(__dirname, "dist")));
-
-// API routes
+// API routes only
 app.use("/api/news", newsRoutes);
 
-// SPA fallback — must come AFTER api routes
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+// Default route for health check
+app.get("/", (req, res) => {
+  res.json({ message: "Backend API is running 🚀" });
 });
 
+// Start server (for local dev, Vercel ignores listen)
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Backend running on http://localhost:${PORT}`);
 });

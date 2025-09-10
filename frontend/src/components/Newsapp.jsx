@@ -13,34 +13,24 @@ export default function NewsApp() {
 
   const apiBaseUrl = import.meta.env.VITE_BACKEND_URL;
 
-  const fetchNews = async (query = "") => {
+  const fetchNews = async (query = "pakistan") => {
     setLoading(true);
     setError(null);
+
     try {
-      const res = await fetch(`${apiBaseUrl}/api/news`);
-      console.log("API Base URL:", apiBaseUrl);
+      // send query to backend
+      const res = await fetch(`${apiBaseUrl}/api/news?q=${encodeURIComponent(query)}`);
+      console.log("Fetching from:", `${apiBaseUrl}/api/news?q=${query}`);
 
       if (!res.ok) throw new Error(`Server error: ${res.status}`);
 
       const contentType = res.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Invalid response format");
+        throw new Error("Invalid response format (not JSON)");
       }
 
       const data = await res.json();
-
-      const filtered = query
-        ? data.articles?.filter((article) => {
-            const title = article.title?.toLowerCase() || "";
-            const description = article.description?.toLowerCase() || "";
-            return (
-              title.includes(query.toLowerCase()) ||
-              description.includes(query.toLowerCase())
-            );
-          })
-        : data.articles;
-
-      setNewsData(filtered || []);
+      setNewsData(data.articles || []);
     } catch (err) {
       console.error("Fetch error:", err.message);
       setError(err.message);
@@ -50,15 +40,14 @@ export default function NewsApp() {
     }
   };
 
+  // load initial news on first render
   useEffect(() => {
-    fetchNews(); 
+    fetchNews(search);
   }, []);
 
   const handleSearchClick = () => {
     fetchNews(search);
   };
-
-
 
   return (
     <>

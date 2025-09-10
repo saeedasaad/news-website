@@ -1,12 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+// 👇 Vercel will serve your frontend, not Express
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 3000,
-  },
-  build: {
-    outDir: "dist"
+    port: 5173,
   }
 });
