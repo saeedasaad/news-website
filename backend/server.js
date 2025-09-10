@@ -46,11 +46,9 @@ app.use(express.static(path.join(__dirname, "dist")));
 app.use("/api/news", newsRoutes);
 
 
+// Handle root path
 app.get("/", (req, res) => {
-  if (req.path.startsWith("/api")) {
-    return res.status(404).json({ error: "API route not found" });
-  }
-  res.json({ error: "API running....." });
+  res.json({ message: "API running..." });
 });
 
 
