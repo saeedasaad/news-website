@@ -43,48 +43,12 @@ src/
 ├── Newsapp.jsx              # Main logic for fetching and rendering news
 └── App.jsx                  # Entry point of the React app
 ```
-##  Getting Started
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/saeedasaad/news-website.git
-cd news-website
-```
-
-### 2. Install Dependencies
-
-```bash
-npm install
-```
-### 3. Setup NewsAPI Key
-
-```bash
-VITE_NEWS_API_KEY=a5a031962299402299d659e0493f56a1
-
-```
-### 4. Run the App
-
-```bash
-npm run dev
-```
-
-## Screenshots
-
-
 ### Screenshots
 <div style="display: flex; gap:30px; align-items: center;">
   <img src="screenshots/homepage.png" alt="Home Page" height="250" />
   <img src="screenshots/search.png" alt="Search Results" height="250" />
   <img src="screenshots/mobile.png" alt="Mobile View" height="250" width="100" />
 </div>
-
-
-## Environment Variables
-
-| Key                       |          Description              |
-| ----------------          |          ------------------------ |
-| `VITE_NEWS_API_KEY`       |  a5a031962299402299d659e0493f56a1 |
 
 
 ## Future Improvements
