@@ -55,7 +55,7 @@ src/
 - Add pagination or infinite scroll
 - Integrate a dark/light mode toggle
 - Add localization support
-- Add loading spinner or skeletons
+- Add loading spinner or skeletons.
 
 ## Acknowledgements  
 
